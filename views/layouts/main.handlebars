@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta author="Michael Gentilini">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  {{!-- Google API call --}}
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2Z73bHqtsEJuas82kslWAoAegg5Rxrco&libraries=places"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <title>Welcome to Hot Load</title>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <header>
+      <nav class="navbar navbar-light  ml-2">
+        <a class="navbar-brand" href="/">
+          <img src="https://cdn1.iconfinder.com/data/icons/transport-vol-2/48/053-512.png" class="
+            d-inline-block align-top">
+
+        </a>
+
+        <nav class="ml-auto">
+          <form class="form-inline ">
+            <a id="btn-login" href="/login" class="btn btn-sm btn-success mr-2">Login </a>
+            <a id="btn-fblogin" href="/register" class="btn btn-sm btn-primary">Register</a>
+          </form>
+        </nav>
+      </nav>
+    </header>
+  </div>
+
+  <div class="container">
+    <div class="jumbotron text-center pt-5" style="background-color: black; background-size: cover">
+      <h2 class="text-center">
+      </h2>
+      <h1 class="display-3" style="color: white; font-weight: 700">Hot Load</h1>
+    </div>
+  </div>
+
+  <section>
+    {{{body}}}
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+  <script src="/js/index.js"></script>
+
+
+  <footer class="mt-auto py-3">
+    <div class="container">
+      <a href="https://github.com/dallasappraiser/Mongoose-News-Scraper">Find it on GitHub <i
+          class="fab fa-github"></i></a>
+    </div>
+  </footer>
+</body>
+
+</html>

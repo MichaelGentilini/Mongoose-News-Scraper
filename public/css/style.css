@@ -1,0 +1,29 @@
+body {
+  background-image: url("https://images.unsplash.com/photo-1521716250348-c4ae4ff1df43?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9");
+  background-size: cover;
+}
+
+.jumbotron {
+  background-color: black;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navIcon {
+  color: white;
+}
+
+section {
+  min-height: 90vh;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
