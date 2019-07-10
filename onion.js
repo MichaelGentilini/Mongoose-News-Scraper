@@ -5,8 +5,9 @@ var axios = require("axios");
 console.log("\n*****************************************\n" +
   "Grabbing titles and links from The Onion:" +
   "\n*****************************************\n");
+var onion = "https://theonion.com"
 
-axios.get("https://theonion.com").then(function (response) {
+axios.get(onion).then(function (response) {
 
 
   var $ = cheerio.load(response.data);
