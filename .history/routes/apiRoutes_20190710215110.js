@@ -6,7 +6,7 @@ module.exports = function (app) {
   // A GET route for scraping the echoJS website
   app.get("/api/nyt/scrape", function (req, res) {
     var nyt = "https://www.nytimes.com/section/us"
-    console.log("ROUTE HIT")
+
     // First, we grab the body of the html with axios
     axios.get(nyt).then(function (response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -14,7 +14,7 @@ module.exports = function (app) {
       console.log(nyt);
       // Now, we grab every h2 within an article tag, and do the following:
       $("li.css-ye6x8s").each(function (i, element) {
-        var result = {};
+        var result = [];
 
         result.title = $(this)
           .find("h2")

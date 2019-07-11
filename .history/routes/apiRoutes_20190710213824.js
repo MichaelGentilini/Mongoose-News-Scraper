@@ -6,7 +6,7 @@ module.exports = function (app) {
   // A GET route for scraping the echoJS website
   app.get("/api/nyt/scrape", function (req, res) {
     var nyt = "https://www.nytimes.com/section/us"
-    console.log("ROUTE HIT")
+
     // First, we grab the body of the html with axios
     axios.get(nyt).then(function (response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -22,9 +22,9 @@ module.exports = function (app) {
         result.link = $(this)
           .find("a").
         attr("href");
-        // result.image = $(this)
-        //   .find("img")
-        //   .attr("src");
+        result.image = $(this)
+          .find("img")
+          .attr("src");
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function (dbArticle) {
