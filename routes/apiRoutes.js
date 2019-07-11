@@ -3,33 +3,33 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 module.exports = function (app) {
-  // A GET route for scraping the echoJS website
-  app.get("/api/nyt/scrape", function (req, res) {
+
+
+  // ? New York Times scraper  
+  app.get("/nyt/scrape", function (req, res) {
     var nyt = "https://www.nytimes.com/section/us"
-    console.log("ROUTE HIT")
     // First, we grab the body of the html with axios
     axios.get(nyt).then(function (response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
-      console.log(nyt);
       // Now, we grab every h2 within an article tag, and do the following:
-      $("li.css-ye6x8s").each(function (i, element) {
+      $("li.css-ye6x8s").slice(0, 10).each(function (i, element) {
         var result = {};
 
         result.title = $(this)
           .find("h2")
           .text();
-        result.link = $(this)
+        result.link = "https://www.nytimes.com" + $(this)
           .find("a").
         attr("href");
-        // result.image = $(this)
-        //   .find("img")
-        //   .attr("src");
+        result.image = $(this)
+          .find("img")
+          .attr("src");
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
-          .then(function (dbArticle) {
+          .then(function (nytArticle) {
             // View the added result in the console
-            console.log(dbArticle);
+            console.log(nytArticle);
           })
           .catch(function (err) {
             // If an error occurred, log it
@@ -42,7 +42,85 @@ module.exports = function (app) {
     });
   });
 
+  // ! Fox scraper
+  app.get("/fox/scrape", function (req, res) {
+    var fox = "https://www.foxnews.com"
 
+    axios.get(fox).then(function (response) {
+      // Then, we load that into cheerio and save it to $ for a shorthand selector
+      var $ = cheerio.load(response.data);
+      // Now, we grab every h2 within an article tag, and do the following:
+      $("article.article").slice(0, 10).each(function (i, element) {
+        var result = {};
+
+        result.title = $(this)
+          .find("h2")
+          .text();
+        result.link = $(this)
+          .find('a')
+          .attr("href");
+        result.image = $(this)
+          .find('img')
+          .attr("src");
+        // Create a new Article using the `result` object built from scraping
+        db.Article.create(result)
+          .then(function (foxArticle) {
+            // View the added result in the console
+            console.log(foxArticle);
+          })
+          .catch(function (err) {
+            // If an error occurred, log it
+            console.log(err);
+          });
+      });
+      // Send a message to the client
+      res.send("Scrape Complete");
+      console.log("Scrape Complete");
+
+    });
+  });
+
+
+  // @ Onion scraper
+  app.get("/onion/scrape", function (req, res) {
+    var onion = "https://theonion.com"
+
+    axios.get(onion).then(function (response) {
+      // Then, we load that into cheerio and save it to $ for a shorthand selector
+      var $ = cheerio.load(response.data);
+      // Now, we grab every h2 within an article tag, and do the following:
+      $("article.js_post_item").slice(0, 10).each(function (i, element) {
+        var result = {};
+        if (result.link === undefined) {
+          result.link = $(this)
+            .find('a')
+            .attr("href");
+        }
+        result.title = $(this)
+          .find("h1")
+          .text();
+        result.link = $(this)
+          .find("figure")
+          .children()
+          .attr("href");
+
+        // Create a new Article using the `result` object built from scraping
+        db.Article.create(result)
+          .then(function (onionArticle) {
+            // View the added result in the console
+            console.log(onionArticle);
+          })
+          .catch(function (err) {
+            // If an error occurred, log it
+            console.log(err);
+          });
+      });
+      // Send a message to the client
+      res.send("Scrape Complete");
+      console.log("Scrape Complete");
+
+    });
+  });
 
   // // Route for getting all Articles from the db
   // app.get("/articles", function (req, res) {

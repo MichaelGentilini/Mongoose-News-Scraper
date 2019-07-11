@@ -41,6 +41,11 @@ mongoose.connect("mongodb://localhost/news-scraper", {
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
+// Render 404 page for any unmatched routes
+app.get("*", function (req, res) {
+  res.render("404");
+});
+
 app.listen(PORT, function () {
   console.log(
     "\n🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
