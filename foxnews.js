@@ -32,5 +32,35 @@ axios.get(fox).then(function (response) {
     });
   });
 
-  console.log(results);
+  // console.log(results);
 });
+
+
+
+// axios.get("http://www.randomtext.me/api/gibberish/p-1/12-25")
+//   .then(function (response) {
+//     var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
+
+//     console.log(randomText)
+//   });
+var randomText = "";
+
+function getRandomText() {
+  axios.get("http://www.randomtext.me/api/gibberish/p-1/12-25")
+    .then(function (response) {
+      var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
+
+      // console.log(randomText)
+      return randomText
+    });
+}
+console.log(randomText, "is here");
+
+axios.get("https://picsum.photos/500/300?random=2.jpg")
+  .then(function (response) {
+    // console.log(response.request.res.req)
+  });
+
+var text = getRandomText();
+console.log(text);
+// console.log(text);

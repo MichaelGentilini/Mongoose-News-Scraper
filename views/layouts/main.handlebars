@@ -29,6 +29,7 @@
 
         <nav class="ml-auto">
           <form class="form-inline ">
+            <a id="btn-login" href="/delete" class="btn btn-outline-danger mr-2">Delete Articles</a>
             <a id="btn-login" href="/saved" class="btn btn-outline-success mr-2">Saved Articles</a>
           </form>
         </nav>
@@ -43,7 +44,7 @@
       <h1 class="display-2" style="color: white; font-weight: 700">Hot News Reader</h1>
 
     </div>
-
+    {{!-- ! Scrape Buttons --}}
     <div class="form-group mt-5 mb-2 form-inline">
       <div class="mt-2 btn-group" role="group" aria-label="Basic example">
         <a href="/nyt/api" role="button" id="scrapeNyt" class="btn btn-lg btn-primary ml-5">New York Times</a>
@@ -51,6 +52,7 @@
         <a href="/onion/api" role="button" id="scrapeOnion" class="btn btn-lg btn-warning ml-5">The Onion</a>
       </div>
     </div>
+
   </div>
   {{{body}}}
 

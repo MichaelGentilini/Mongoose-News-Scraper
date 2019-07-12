@@ -11,7 +11,6 @@ module.exports = function (app) {
         date: -1
       }
     }, function (err, data) {
-      console.log("======================================================================= HERE'S THE DATA =============================================", data);
       if (data.length === 0) {
         res.render("placeholder", {
           message: "There's nothing scraped yet. Please click \"Scrape For Newest Articles\" for fresh and delicious news."
@@ -105,7 +104,6 @@ module.exports = function (app) {
         result.image = $(this)
           .find('img')
           .attr("src");
-        result.summary = "follow the link to find out more";
         result.source = "Fox News";
 
         // Create a new Article using the `result` object built from scraping
@@ -149,9 +147,9 @@ module.exports = function (app) {
           .find("figure")
           .children()
           .attr("href");
-        result.summary = "follow the link to find out more";
         result.source = "The Onion";
         result.image = "img/onion-logo.jpg"
+        // result.summary = getRandomText;
         // result.image = "https://www.thewrap.com/wp-content/uploads/2015/06/onion-logo.jpg"
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
@@ -195,7 +193,7 @@ module.exports = function (app) {
   });
 
   app.get("/", function (req, res) {
-    Article.find({}, null, {
+    db.Article.find({}, null, {
       sort: {
         created: -1
       }
@@ -212,6 +210,34 @@ module.exports = function (app) {
     });
   });
 
+  app.get("/onion", function (req, res) {
+    db.Article.find({
+      "source": "The Onion"
+    }, null, {
+      sort: {
+        created: -1
+      }
+    }, function (err, data) {
+      if (data.length === 0) {
+        res.render("placeholder", {
+          message: "There's nothing scraped yet. Please click a button above for some news."
+        });
+      } else {
+        res.render("onion", {
+          articles: data
+        });
+      }
+    });
+  });
+
+  function getRandomText() {
+    axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
+      .then(function (response) {
+        var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
+
+        return randomText
+      });
+  }
   // // Route for grabbing a specific Article by id, populate it with it's note
   // app.get("/articles/:id", function (req, res) {
   //   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
