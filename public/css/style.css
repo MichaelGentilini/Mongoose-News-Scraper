@@ -16,6 +16,7 @@ body {
   width: 50%;
 }
 
+/* front page large buttons */
 .btn-lg {
   padding: 1em 2.5em;
   font-size: 2em;
@@ -25,6 +26,13 @@ body {
 section {
   min-height: 90vh;
   /* needed for sticky footer*/
+}
+
+
+/* image in results */
+#media-image {
+  width: 30%;
+  margin: auto;
 }
 
 footer {

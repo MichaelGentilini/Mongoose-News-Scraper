@@ -22,11 +22,13 @@ axios.get(fox).then(function (response) {
     var title = $(element).find("h2").text();
     var link = $(element).find('a').attr("href");
     var image = $(element).find('img').attr("src");
+    var summary = $(element).find("p").text();
 
     results.push({
       title,
       link,
-      image
+      image,
+      summary
     });
   });
 

@@ -10,13 +10,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
+  {{!-- sweet Alert --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <title>The Hottest News Reader Around</title>
 </head>
 
@@ -43,11 +41,39 @@
       <h2 class="text-center">
       </h2>
       <h1 class="display-2" style="color: white; font-weight: 700">Hot News Reader</h1>
-      <h3 style="color: white; font-weight: 700">just pick your source</h3>
+
+    </div>
+
+    <div class="form-group mt-5 mb-2 form-inline">
+      <div class="mt-2 btn-group" role="group" aria-label="Basic example">
+        <a href="/nyt/api" role="button" id="scrapeNyt" class="btn btn-lg btn-primary ml-5">New York Times</a>
+        <a href="/fox/api" role="button" id="scrapeFox" class="btn btn-lg btn-danger ml-5">Fox</a>
+        <a href="/onion/api" role="button" id="scrapeOnion" class="btn btn-lg btn-warning ml-5">The Onion</a>
+      </div>
     </div>
   </div>
-
   {{{body}}}
+
+
+  {{!-- Note --}}
+  {{!-- <div class="container mb-5">
+    <div class="note-card card bg-light text-center" id="addnote">
+      <div id="note-displayer">
+        <div class="card-header bg-dark text-white">
+          <h2>Note</h2>
+        </div>
+        <h3 class="card-header" id="article-title">Article: {{this.id}}</h3>
+        <div id="note">
+          <label for="note-title">Title</label><br>
+          <input type="text" placeholder="Title" name="title" id="note-title"><br>
+          <label for="note-body">Note</label><br>
+          <textarea rows="" placeholder="Note" id="note-body"></textarea><br>
+          <button type="submit" id="add-note">Save Note</button>
+          <button type="button" id="close-note">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
@@ -55,7 +81,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-  {{!-- <script src="js/index.js"></script> --}}
+  <script src="js/index.js"></script>
 
   <footer class="mt-auto py-3">
     <div class="container">

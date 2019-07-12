@@ -3,13 +3,89 @@
   <section>
     <div class="container">
       <div class="form-group mt-5 mb-2 form-inline">
-        <div class="mt-2 btn-group" role="group" aria-label="Basic example">
-          <a href="/nyt" role="button" id="scrapeNyt" class="btn btn-lg btn-primary ml-5">New York Times</a>
-          <a href="/fox" role="button" id="scrapeFox" class="btn btn-lg btn-danger ml-5">Fox</a>
-          <a href="/onion" role="button" id="scrapeOnion" class="btn btn-lg btn-warning ml-5">The Onion</a>
-        </div>
 
+
+        <div class="container mt-5">
+          <div class="card text-center bg-dark ">
+            <div class="card-body border-primary">
+              <h2 class="results-card-title bg-dark text-white pt-3 pb-3">Results</h2>
+              <div class="card border-primary mt-3" id="results">
+
+                {{#unless articles.length}}
+                <h4 class="text-center">👀 Looks like we don't have any articles. 👀</h4>
+                <h5> 👆 Pick your source above 👆 </h5>
+                {{/unless}}
+
+                {{#each articles}}
+
+                <div data-_id={{this._id}} class="card mt-4">
+
+                  <p><strong>Source:</strong> <em>{{this.source}}</em></p>
+                  <img id="media-image" class="card-img-top" src="{{this.image}}" alt="Card image cap">
+
+
+
+                  <h3 class="card-header">
+                    <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
+                  </h3>
+
+                  <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
+
+                  <div class=" card-body">
+                    <a id="addNote" class="btn btn-outline-secondary notes">Add Notes</a>
+                    <a id="saveArticle" class="btn btn-outline-info save">Save Article</a>
+                    <a id="deleteArticle" class="btn btn-outline-danger delete">Delete Article</a>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- ! NOTE --}}
+              {{!-- <div class="container mb-5">
+                  <div class="note-card card bg-light text-center" id="addnote">
+                    <div id="note-displayer">
+                      <div class="card-header bg-dark text-white">
+                        <h2>Note</h2>
+                      </div>
+                      <h3 class="card-header" id="article-title">Article: {{this.id}}</h3>
+                      <div id="note">
+                        <label for="note-title">Title</label><br>
+                        <input type="text" placeholder="Title" name="title" id="note-title"><br>
+                        <label for="note-body">Note</label><br>
+                        <textarea rows="" placeholder="Note" id="note-body"></textarea><br>
+
+                        <button type="submit" id="add-note">Save Note</button>
+                        <button type="button" id="close-note">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div> --}}
+
+              {{!-- this is taken from douglas boyce github as an example to work with
+                <div class="story-body" id={{this._id}}>
+                  <h2>
+                    <a href="{{this.link}}" target="_blank">{{this.title}}</a>
+                    <form action="/saved/{{this._title}}" method="POST">
+                      <button type="submit" class="status" value="{{this.saved}}">{{this.saved}}</button>
+                      {{#unless this.note}}
+                      <button type="button" class="addnote-button" value="{{this._id}}">Add A Note</button>
+                      {{/unless}}
+                      {{#if this.note}}
+                      <button type="button" class="addnote-button" value="{{this._id}}">Edit Note</button>
+                      {{/if}}
+                    </form>
+                  </h2>
+                  <summary>{{this.summary}}</summary>
+                  <img class="media" src="{{this.image}}">
+                </div> --}}
+              {{/each}}
+
+
+            </div>
+            <a href="/saved" class="btn btn-block btn-success mt-3" role="button" aria-pressed="true">View Saved</a>
+          </div>
+        </div>
       </div>
+    </div>
     </div>
 
 

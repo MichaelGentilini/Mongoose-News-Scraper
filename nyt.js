@@ -20,11 +20,13 @@ axios.get(nyt).then(function (response) {
     var link = $(element).find("a").attr("href");
     link = 'https://www.nytimes.com' + link
     var image = $(element).find("img").attr("src");
+    var summary = $(element).find("p").text();
 
     results.push({
       title,
       link,
-      image
+      image,
+      summary
     });
   });
 

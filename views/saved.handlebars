@@ -3,8 +3,27 @@
     <div class="card text-center ">
       <div class="card-body border-success">
         <h2 class="saved-card-title bg-success text-white pt-3 pb-3">Saved Results</h2>
-        <div class="card border-success text-success mt-3" id="savedResults">Results GO Here</div>
-        <a href="/" class="btn btn-success mt-3" role="button" aria-pressed="true">Take Me Home</a>
+        <div class="card border-success text-success mt-3" id="savedResults">
+
+          {{#each articles}}
+          <div data-_id={{this._id}} class="card">
+            <div class="card-header">
+              <h3>
+                <a class="article-link" target="_blank" rel="noopener noreferrer"
+                  href="{{this.link}}">{{this.title}}</a>
+                <a class="btn btn-danger delete">Delete From Saved</a>
+                <a class="btn btn-info notes">Article Notes</a>
+              </h3>
+            </div>
+          </div>
+          {{/each}}
+
+          {{#unless articles.length}}
+          <h4 class="text-center">Looks like we don't have any saved articles.</h4>
+          {{message}}
+          {{/unless}}
+        </div>
+        <a href="/" class="btn btn-success mt-3" role="button" aria-pressed="true">Take Me Home for Articles</a>
       </div>
     </div>
   </div>

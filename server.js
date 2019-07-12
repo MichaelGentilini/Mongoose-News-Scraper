@@ -2,11 +2,12 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 
-// Scraping tools
-var axios = require("axios");
-var cheerio = require("cheerio");
+// // Scraping tools
+// var axios = require("axios");
+// var cheerio = require("cheerio");
 
-var db = require("./models");
+// var db = require("./models");
+var Article = require("./models/Article");
 
 var app = express();
 
@@ -31,9 +32,21 @@ app.engine(
 app.set("view engine", "handlebars");
 
 
+var collection = "news-scraper"
 // ! Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/news-scraper", {
+mongoose.connect("mongodb://localhost/" + collection, {
   useNewUrlParser: true
+});
+
+mongoose.Promise = Promise;
+var db = mongoose.connection;
+
+db.on("error", function (error) {
+  console.log("Mongoose Error: ", error);
+});
+
+db.once("open", function () {
+  console.log("Mongoose connection to the " + collection + " collection successful.");
 });
 
 
