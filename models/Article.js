@@ -27,7 +27,11 @@ var ArticleSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  saved: {
+  isSaved: {
+    type: Boolean,
+    default: false
+  },
+  isNote: {
     type: Boolean,
     default: false
   },

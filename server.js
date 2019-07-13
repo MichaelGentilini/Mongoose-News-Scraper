@@ -1,6 +1,10 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
+// * not sure what this does but found it online
+
+mongoose.set('debug', true);
+
 
 var app = express();
 

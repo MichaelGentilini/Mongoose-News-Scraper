@@ -26,7 +26,7 @@ module.exports = function (app) {
   // ? Get Saved Articles
   app.get("/saved", function (req, res) {
     db.Article.find({
-      saved: true
+      isSaved: true
     }, function (err, data) {
       if (data.length === 0) {
         res.render("index", {
@@ -42,16 +42,20 @@ module.exports = function (app) {
   });
 
   // ? Get Saved Articles
-  app.get("/saved/:id", function (req, res) {
-    db.Article.find({
-      saved: true
-    }, function (err, data) {
-      res.render("saved", {
-        saved: data
-      });
-    });
-  });
+  app.get("/saved/:id/:saved", function (req, res) {
 
+
+    db.Article.findOneAndUpdate({
+        _id: req.params.id
+      }, {
+        isSaved: req.params.saved
+      })
+      .then(function (err, data) {
+        res.render("saved", {
+          saved: data
+        });
+      });
+  });
 
   app.get("/", function (req, res) {
     db.Article.find({}, null, {
@@ -68,7 +72,7 @@ module.exports = function (app) {
   // ! Delete All Articles
   app.get("/delete", function (req, res) {
     db.Article.deleteMany({
-        "saved": false
+        "isSaved": false
       })
       .then(function () {
         res.render("index", {
@@ -77,14 +81,16 @@ module.exports = function (app) {
       });
   });
 
-  app.get("/delete/id", function (req, res) {
+  // ! Delete a single Article
+  app.get("/delete/:id", function (req, res) {
     db.Article.deleteOne({
         _id: req.params.id
       })
       .then(function () {
-        res.render("index", {
-          "message": "Article Deleted"
-        })
+        console.log('deleted', req.params.id)
+      })
+      .catch(function (err) {
+        console.log(err);
       });
   });
 
@@ -263,23 +269,6 @@ module.exports = function (app) {
       }
     });
   });
-
-
-  app.get("/delete/:id", function (req, res) {
-    console.log("req says:", req.params);
-    db.Article.deleteOne({
-        id: req.params.id
-      })
-      .then(function () {
-        res.render("message", {
-          message: "Article deleted"
-        });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  });
-
 
   function getRandomText() {
     axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
