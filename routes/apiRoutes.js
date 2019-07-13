@@ -99,9 +99,7 @@ module.exports = function (app) {
     var nyt = "https://www.nytimes.com/section/us"
     axios.get(nyt).then(function (response) {
       var $ = cheerio.load(response.data);
-
-
-      $("li.css-ye6x8s").slice(0, 10).each(function (i, element) {
+     $("li.css-ye6x8s").slice(0, 10).each(function (i, element) {
         var result = {};
         result.title = $(this)
           .find("h2")
@@ -232,8 +230,7 @@ module.exports = function (app) {
         result.image = "img/onion-logo.jpg"
 
         //?? working on this for a random generated text
-        //  result.summary = getRandomText;
-
+        //  result.summary = randomText;
         db.Article.create(result)
           .then(function (onionArticle) {
             // console.log(onionArticle);
@@ -247,6 +244,14 @@ module.exports = function (app) {
       res.redirect('/onion');
       console.log("############## Scrape Complete ##############");
     });
+
+    function getRandomText() {
+      axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
+        .then(function (response) {
+          var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
+          return randomText
+        });
+    }
   });
 
   // @ Get onion results on onion page
@@ -270,13 +275,7 @@ module.exports = function (app) {
     });
   });
 
-  function getRandomText() {
-    axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
-      .then(function (response) {
-        var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
-        return randomText
-      });
-  }
+
 
   // Route for grabbing a specific Article by id, populate it with it's note
   app.get("/all/:id", function (req, res) {

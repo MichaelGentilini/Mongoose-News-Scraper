@@ -55,8 +55,10 @@
                           <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
                         </h4>
 
-                        <img class=" article-image card-img-top" src="{{this.image}}" alt="Card image cap">
+                        <img class="article-image card-img-top" src="{{this.image}}" alt="Card image cap">
                         <p><strong>Source:</strong> <em>{{this.source}}</em></p>
+
+                        {{!-- <img class="article-image" src="{{this.image}}" class="mt-2"> --}}
 
                         {{#unless this.summary}}
                         <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from

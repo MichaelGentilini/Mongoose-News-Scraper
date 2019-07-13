@@ -20,13 +20,8 @@
                   isNote={{this.isNote}}><i class="far fa-sticky-note fa-2x"></i></a>
                 {{/if}}
 
-                {{#if saved}}
-                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
-                    class="far fa-save fa-2x"></i></a>
-                {{else}}
-                <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
-                  save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
-                {{/if}}
+                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i class="far fa-save fa-2x"></i></a>
+              
                 <a class="btn btn-outline-danger text-danger deleteArticle" delete-id={{this._id}}><i
                     class="fas fa-trash fa-2x"></i></a>
 
@@ -41,7 +36,7 @@
                     <a class="article-link text-left" target="_blank" href="{{this.link}}">{{this.title}}</a>
                   </h3>
                   {{#if this.image}}
-                  <img src="{{this.image}}" class="mt-2">
+                 <img class="article-image" src="{{this.image}}" class="mt-2">
                   {{/if}}
 
                   {{#if this.summary}}

@@ -25,9 +25,8 @@
                   isNote={{this.isNote}}><i class="far fa-sticky-note fa-2x"></i></a>
                 {{/if}}
 
-                {{#if saved}}
-                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
-                    class="far fa-save fa-2x"></i></a>
+                {{#if isSaved}}
+                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i class="far fa-save fa-2x"></i></a>
                 {{else}}
                 <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
                   save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
