@@ -3,37 +3,99 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 module.exports = function (app) {
-
-
-  app.get("/", function (req, res) {
+  // @ Get all records for the all page
+  app.get("/all", function (req, res) {
     db.Article.find({}, null, {
       sort: {
         date: -1
       }
     }, function (err, data) {
       if (data.length === 0) {
-        res.render("placeholder", {
-          message: "There's nothing scraped yet. Please click \"Scrape For Newest Articles\" for fresh and delicious news."
+        res.render("index", {
+          message: "There's nothing scraped yet."
         });
 
       } else {
-        res.render("index", {
+        res.render("all", {
           articles: data
         });
       }
     });
   });
 
-  // ? New York Times scraper  
-  app.get("/nyt/api", function (req, res) {
-    var nyt = "https://www.nytimes.com/section/us"
-    // First, we grab the body of the html with axios
-    axios.get(nyt).then(function (response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-      // Now, we grab every h2 within an article tag, and do the following:
+  // ? Get Saved Articles
+  app.get("/saved", function (req, res) {
+    db.Article.find({
+      saved: true
+    }, function (err, data) {
+      if (data.length === 0) {
+        res.render("index", {
+          message: "There's nothing scraped yet."
+        });
 
-      $("li.css-ye6x8s").slice(0, 5).each(function (i, element) {
+      } else {
+        res.render("saved", {
+          saved: data
+        });
+      }
+    });
+  });
+
+  // ? Get Saved Articles
+  app.get("/saved/:id", function (req, res) {
+    db.Article.find({
+      saved: true
+    }, function (err, data) {
+      res.render("saved", {
+        saved: data
+      });
+    });
+  });
+
+
+  app.get("/", function (req, res) {
+    db.Article.find({}, null, {
+      sort: {
+        created: -1
+      }
+    }, function (err, data) {
+      res.render("index", {
+        message: "Where would you like to get your news?"
+      })
+    });
+  });
+
+  // ! Delete All Articles
+  app.get("/delete", function (req, res) {
+    db.Article.deleteMany({
+        "saved": false
+      })
+      .then(function () {
+        res.render("index", {
+          message: "👀 It's time to search for articles!"
+        });
+      });
+  });
+
+  app.get("/delete/id", function (req, res) {
+    db.Article.deleteOne({
+        _id: req.params.id
+      })
+      .then(function () {
+        res.render("index", {
+          "message": "Article Deleted"
+        })
+      });
+  });
+
+  // ? New York Times scraper  
+  app.get("/nyt/scrape", function (req, res) {
+    var nyt = "https://www.nytimes.com/section/us"
+    axios.get(nyt).then(function (response) {
+      var $ = cheerio.load(response.data);
+
+
+      $("li.css-ye6x8s").slice(0, 10).each(function (i, element) {
         var result = {};
         result.title = $(this)
           .find("h2")
@@ -49,15 +111,11 @@ module.exports = function (app) {
           .attr("src")
         result.source = "New York Times";
 
-        // Create a new Article using the `articles` object built from scraping  
         db.Article.create(result)
-
           .then(function (nytArticle) {
-            // view new articles
-            console.log(nytArticle);
+            // console.log(nytArticle);
           })
           .catch(function (err) {
-            // If an error occurred, log it
             console.log(err);
           });
       });
@@ -69,32 +127,35 @@ module.exports = function (app) {
     });
   });
 
-
-  // // ? Route for getting all New York Times Articles from the db
-  // app.get("/nyt", function (req, res) {
-  //   // Grab every document in the Articles collection
-  //   db.Article.find({})
-  //     .then(function (dbArticle) {
-  //       // If we were able to successfully find Articles, send them back to the client
-  //       res.json(dbArticle);
-  //     })
-  //     .catch(function (err) {
-  //       // If an error occurred, send it to the client
-  //       res.json(err);
-  //     });
-  // });
+  // ? Get new york times results on new york times page
+  app.get("/nyt", function (req, res) {
+    db.Article.find({
+      "source": "New York Times"
+    }, null, {
+      sort: {
+        created: -1
+      }
+    }, function (err, data) {
+      if (data.length === 0) {
+        res.render("nyt", {
+          // message: "There's nothing scraped yet."
+        });
+      } else {
+        res.render("nyt", {
+          articles: data
+        });
+      }
+    });
+  });
 
   // ! Fox scraper
-  app.get("/fox/api", function (req, res) {
+  app.get("/fox/scrape", function (req, res) {
     var fox = "https://www.foxnews.com"
 
     axios.get(fox).then(function (response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
-      // Now, we grab every h2 within an article tag, and do the following:
-      $("article.article").slice(0, 5).each(function (i, element) {
+      $("article.article").slice(0, 10).each(function (i, element) {
         var result = {};
-
         result.title = $(this)
           .find("h2")
           .text();
@@ -106,34 +167,48 @@ module.exports = function (app) {
           .attr("src");
         result.source = "Fox News";
 
-        // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function (foxArticle) {
-            // View the added result in the console
-            console.log(foxArticle);
+            // console.log(foxArticle);
           })
           .catch(function (err) {
-            // If an error occurred, log it
             console.log(err);
           });
       });
-      // Send a message to the client
       res.redirect('/fox');
       console.log("############## Scrape Complete ##############");
     });
   });
 
+  // ! Get fox results on fox page
+  app.get("/fox", function (req, res) {
+    db.Article.find({
+      "source": "Fox News"
+    }, null, {
+      sort: {
+        created: -1
+      }
+    }, function (err, data) {
+      if (data.length === 0) {
+        res.render("fox", {
+          // message: "There's nothing scraped yet."
+        });
+      } else {
+        res.render("fox", {
+          articles: data
+        });
+      }
+    });
+  });
 
 
   // @ Onion scraper
-  app.get("/onion/api", function (req, res) {
+  app.get("/onion/scrape", function (req, res) {
     var onion = "https://theonion.com"
 
     axios.get(onion).then(function (response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
-      // Now, we grab every h2 within an article tag, and do the following:
-      $("article.js_post_item").slice(0, 5).each(function (i, element) {
+      $("article.js_post_item").slice(0, 10).each(function (i, element) {
         var result = {};
         if (result.link === undefined) {
           result.link = $(this)
@@ -149,67 +224,26 @@ module.exports = function (app) {
           .attr("href");
         result.source = "The Onion";
         result.image = "img/onion-logo.jpg"
-        // result.summary = getRandomText;
-        // result.image = "https://www.thewrap.com/wp-content/uploads/2015/06/onion-logo.jpg"
-        // Create a new Article using the `result` object built from scraping
+
+        //?? working on this for a random generated text
+        //  result.summary = getRandomText;
+
         db.Article.create(result)
           .then(function (onionArticle) {
-            // View the added result in the console
-            console.log(onionArticle);
+            // console.log(onionArticle);
           })
 
           .catch(function (err) {
-            // If an error occurred, log it
             console.log(err);
           });
       });
 
       res.redirect('/onion');
-      // Send a message to the client in the console
       console.log("############## Scrape Complete ##############");
     });
   });
 
-
-  // Get Saved Articles
-  app.get("/saved", function (req, res) {
-    db.Article.find({
-      saved: true
-    }, null, {
-      sort: {
-        created: -1
-      }
-    }, function (err, data) {
-      if (data.length === 0) {
-        res.render("saved", {
-          message: "You have not saved any articles yet."
-        });
-      } else {
-        res.render("saved", {
-          saved: data
-        });
-      }
-    });
-  });
-
-  app.get("/", function (req, res) {
-    db.Article.find({}, null, {
-      sort: {
-        created: -1
-      }
-    }, function (err, data) {
-      if (data.length === 0) {
-        res.render("placeholder", {
-          message: "There's nothing scraped yet. Please click a button above for some news."
-        });
-      } else {
-        res.render("index", {
-          articles: data
-        });
-      }
-    });
-  });
-
+  // @ Get onion results on onion page
   app.get("/onion", function (req, res) {
     db.Article.find({
       "source": "The Onion"
@@ -219,8 +253,8 @@ module.exports = function (app) {
       }
     }, function (err, data) {
       if (data.length === 0) {
-        res.render("placeholder", {
-          message: "There's nothing scraped yet. Please click a button above for some news."
+        res.render("onion", {
+          // message: "There's nothing scraped yet."
         });
       } else {
         res.render("onion", {
@@ -230,55 +264,70 @@ module.exports = function (app) {
     });
   });
 
+
+  app.get("/delete/:id", function (req, res) {
+    console.log("req says:", req.params);
+    db.Article.deleteOne({
+        id: req.params.id
+      })
+      .then(function () {
+        res.render("message", {
+          message: "Article deleted"
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  });
+
+
   function getRandomText() {
     axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
       .then(function (response) {
         var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
-
         return randomText
       });
   }
-  // // Route for grabbing a specific Article by id, populate it with it's note
-  // app.get("/articles/:id", function (req, res) {
-  //   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  //   db.Article.findOne({
-  //       _id: req.params.id
-  //     })
-  //     // ..and populate all of the notes associated with it
-  //     .populate("note")
-  //     .then(function (dbArticle) {
-  //       // If we were able to successfully find an Article with the given id, send it back to the client
-  //       res.json(dbArticle);
-  //     })
-  //     .catch(function (err) {
-  //       // If an error occurred, send it to the client
-  //       res.json(err);
-  //     });
-  // });
 
-  // // Route for saving/updating an Article's associated Note
-  // app.post("/articles/:id", function (req, res) {
-  //   // Create a new note and pass the req.body to the entry
-  //   db.Note.create(req.body)
-  //     .then(function (dbNote) {
-  //       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-  //       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-  //       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-  //       return db.Article.findOneAndUpdate({
-  //         _id: req.params.id
-  //       }, {
-  //         note: dbNote._id
-  //       }, {
-  //         new: true
-  //       });
-  //     })
-  //     .then(function (dbArticle) {
-  //       // If we were able to successfully update an Article, send it back to the client
-  //       res.json(dbArticle);
-  //     })
-  //     .catch(function (err) {
-  //       // If an error occurred, send it to the client
-  //       res.json(err);
-  //     });
-  // });
+  // Route for grabbing a specific Article by id, populate it with it's note
+  app.get("/all/:id", function (req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Article.findOne({
+        _id: req.params.id
+      })
+      // ..and populate all of the notes associated with it
+      .populate("note")
+      .then(function (dbArticle) {
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        res.render("index", {
+          "note": dbArticle
+        })
+      })
+      .catch(function (err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+
+  // Route for saving/updating an Article's associated Note
+  app.post("/all/:id", function (req, res) {
+    // Create a new note and pass the req.body to the entry
+    db.Note.create(req.body)
+      .then(function (dbNote) {
+        return db.Article.findOneAndUpdate({
+          _id: req.params.id
+        }, {
+          note: dbNote._id
+        }, {
+          new: true
+        });
+      })
+      .then(function (dbArticle) {
+        // If we were able to successfully update an Article, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
 };

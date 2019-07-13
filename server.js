@@ -2,13 +2,6 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 
-// // Scraping tools
-// var axios = require("axios");
-// var cheerio = require("cheerio");
-
-// var db = require("./models");
-var Article = require("./models/Article");
-
 var app = express();
 
 var PORT = process.env.PORT || 3000;
@@ -31,10 +24,12 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-
 var collection = "news-scraper"
-// ! Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/" + collection, {
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/" + collection;
+
+// @ Connect to the Mongo DB
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 

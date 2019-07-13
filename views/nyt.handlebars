@@ -1,30 +1,68 @@
 <section>
   <div class="container">
-    <div class="card text-center ">
-      <div class="card-body border-primary">
-        <img class="card-img-top" src="/img/nyt.jpg" alt="Card image cap">
-        <h2 class="nyt-card-title bg-primary text-white pt-3 pb-3">New York Times Results</h2>
-        <div class="card border-primary text-primary mt-3" id="nytResults">
+    <div class="card bg-primary p-4  mt-5">
+      <div class="container">
 
-          {{#each articles}}
-          <div data-_id={{this._id}} class="card">
-            <div class="card-header">
-              <h3>
-                <a class="article-link" target="_blank" rel="noopener noreferrer"
-                  href="{{this.link}}">{{this.title}}</a>
-                <a class="btn btn-danger delete">Delete From Saved</a>
-                <a class="btn btn-info notes">Article Notes</a>
-              </h3>
-            </div>
-          </div>
-          {{/each}}
+        <img class="card-img-top pb-3" src="/img/nyt.jpg" alt="Card image cap">
 
-          {{#unless articles.length}}
-          <h4 class="text-center">Looks like we don't have any articles.</h4>
-          {{/unless}}
+        <div class="card mb-2 text-center">
+          <a href="/nyt/scrape" role="button" id="scrapeNyt" class="btn text-primary">Scrape New York
+            Times</a>
         </div>
-        <a href="/saved" class="btn btn-success mt-3" role="button" aria-pressed="true">View Saved</a>
-        <a href="/" class="btn btn-primary ml-4 mt-3" role="button" aria-pressed="true">Take Me Home</a>
+
+        {{#each articles}}
+        <div class="card border-primary my-3 px-5 py-2">
+
+          <div class="row">
+            <div class="col-1 pt-2 pr-5">
+              <div class="btn-group-vertical text-center ">
+
+
+                {{#if note}}
+                <a class="btn mt btn-warning text-white addNote" isNote=true><i
+                    class="far fa-sticky-note fa-2x"></i></a>
+                {{else}}
+                <a class="btn mt btn-outline-warning text-warning addNote" isNote=false><i
+                    class="far fa-sticky-note fa-2x"></i></a>
+                {{/if}}
+
+                {{#if saved}}
+                <a class="btn btn-success text-white saveArticle " isSaved=true><i class="far fa-save fa-2x"></i></a>
+                {{else}}
+                <a class="btn btn-outline-success text-success saveArticle" isSaved=false><i
+                    class="far fa-save fa-2x"></i></a>
+                {{/if}}
+
+                <a class="btn btn-outline-danger text-danger deleteArticle"><i class="fas fa-trash fa-2x"></i></a>
+
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card text-center" data-_id={{this._id}}>
+                <div class="py-2">
+
+                  <h3 class="card-header px-5 mb-2">
+                    <a class="article-link text-left" target="_blank" href="{{this.link}}">{{this.title}}</a>
+                  </h3>
+
+                  <img class="article-image" src="{{this.image}}" class="mt-2">
+
+                  {{#unless this.summary}}
+                  <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
+                    <em>{{this.source}}</em></h6>
+                  {{/unless}}
+
+                  <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-1"></div>
+          </div>
+        </div>
+
+        {{/each}}
       </div>
     </div>
   </div>

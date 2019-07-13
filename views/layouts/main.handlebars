@@ -19,63 +19,43 @@
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <nav class="navbar navbar-light ml-2">
-        <a class="navbar-brand" href="/">
-          <img src="https://iconsplace.com/wp-content/uploads/_icons/ffffff/256/png/news-icon-18-256.png" width="50"
-            height="50" class=" d-inline-block align-top navIcon">
-        </a>
+  <header>
+    <nav class="navbar navbar-light ml-2">
+      <a class="navbar-brand text-white" href="/">
+        <h1>
+          Hot News Reader</h1>
+      </a>
 
-        <nav class="ml-auto">
-          <form class="form-inline ">
-            <a id="btn-login" href="/delete" class="btn btn-outline-danger mr-2">Delete Articles</a>
-            <a id="btn-login" href="/saved" class="btn btn-outline-success mr-2">Saved Articles</a>
-          </form>
-        </nav>
+      <nav class="ml-auto">
+        <form class="form-inline ">
+          <a id="btn-login" href="/delete" class="btn btn-danger mr-2"><i class="fas fa-trash "></i> Delete
+          </a>
+          <a id="btn-login" href="/saved" class="btn btn-success mr-2"><i class="far fa-save "> View Saved</i></a>
+        </form>
       </nav>
-    </header>
+    </nav>
+  </header>
+
+  <div class="container text-center">
+    <div class="mt-2 btn-group" role="group" aria-label="Basic example">
+      <a href="/nyt" role="button" id="scrapeNyt" class="btn btn-lg btn-primary">New York Times</a>
+      <a href="/fox" role="button" id="scrapeFox" class="btn btn-lg btn-danger ml-5">Fox News</a>
+      <a href="/onion" role="button" id="scrapeOnion" class="btn btn-lg btn-warning ml-5">The Onion</a>
+      {{#unless message}}
+      <a href="/all" role="button" id="viewAll" class="btn btn-lg btn-dark ml-5">View All</a>
+      {{/unless}}
+    </div>
   </div>
 
-  <div class="container">
-    <div class="jumbotron text-center pt-5" style="background-color: black; background-size: cover">
-      <h2 class="text-center">
-      </h2>
-      <h1 class="display-2" style="color: white; font-weight: 700">Hot News Reader</h1>
-
+  {{#if message}}
+  <div class="container mt-5">
+    <div class="jumbotron text-center pt-5">
+      <p class="display-4" style="color: white; font-weight: 700">{{message}}</p>
     </div>
-    {{!-- ! Scrape Buttons --}}
-    <div class="form-group mt-5 mb-2 form-inline">
-      <div class="mt-2 btn-group" role="group" aria-label="Basic example">
-        <a href="/nyt/api" role="button" id="scrapeNyt" class="btn btn-lg btn-primary ml-5">New York Times</a>
-        <a href="/fox/api" role="button" id="scrapeFox" class="btn btn-lg btn-danger ml-5">Fox</a>
-        <a href="/onion/api" role="button" id="scrapeOnion" class="btn btn-lg btn-warning ml-5">The Onion</a>
-      </div>
-    </div>
-
   </div>
+  {{/if }}
+
   {{{body}}}
-
-
-  {{!-- Note --}}
-  {{!-- <div class="container mb-5">
-    <div class="note-card card bg-light text-center" id="addnote">
-      <div id="note-displayer">
-        <div class="card-header bg-dark text-white">
-          <h2>Note</h2>
-        </div>
-        <h3 class="card-header" id="article-title">Article: {{this.id}}</h3>
-        <div id="note">
-          <label for="note-title">Title</label><br>
-          <input type="text" placeholder="Title" name="title" id="note-title"><br>
-          <label for="note-body">Note</label><br>
-          <textarea rows="" placeholder="Note" id="note-body"></textarea><br>
-          <button type="submit" id="add-note">Save Note</button>
-          <button type="button" id="close-note">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div> --}}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">

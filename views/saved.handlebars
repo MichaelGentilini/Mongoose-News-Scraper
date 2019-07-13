@@ -1,30 +1,73 @@
 <section>
   <div class="container">
-    <div class="card text-center ">
-      <div class="card-body border-success">
-        <h2 class="saved-card-title bg-success text-white pt-3 pb-3">Saved Results</h2>
-        <div class="card border-success text-success mt-3" id="savedResults">
+    <div class="card bg-success p-4  mt-5">
+      <div class="container">
+        <img class="card-img-top pb-3" src="/img/fav.jpg" alt="Card image cap">
 
-          {{#each articles}}
-          <div data-_id={{this._id}} class="card">
-            <div class="card-header">
-              <h3>
-                <a class="article-link" target="_blank" rel="noopener noreferrer"
-                  href="{{this.link}}">{{this.title}}</a>
-                <a class="btn btn-danger delete">Delete From Saved</a>
-                <a class="btn btn-info notes">Article Notes</a>
-              </h3>
+
+        {{#each saved}}
+        <div class="card my-3 px-5 py-2">
+
+          <div class="row">
+            <div class="col-1 pt-2 pr-5">
+              <div class="btn-group-vertical text-center ">
+
+                {{#if note}}
+                <a class="btn mt btn-warning text-white isNote"><i class="far fa-sticky-note fa-2x"></i></a>
+                {{else}}
+                <a class="btn mt btn-outline-warning text-warning notNote"><i class="far fa-sticky-note fa-2x"></i></a>
+                {{/if}}
+
+                {{#if saved}}
+                <a class="btn btn-success text-white isSaved"><i class="far fa-save fa-2x"></i></a>
+                {{else}}
+                <a class="btn btn-outline-success text-success notSaved"><i class="far fa-save fa-2x"></i></a>
+                {{/if}}
+
+                <a class="btn btn-outline-danger text-danger delete"><i class="fas fa-trash fa-2x"></i></a>
+              </div>
             </div>
-          </div>
-          {{/each}}
 
-          {{#unless articles.length}}
-          <h4 class="text-center">Looks like we don't have any saved articles.</h4>
-          {{message}}
-          {{/unless}}
+            <div class="col">
+              <div class="card text-center" data-_id={{this._id}}>
+                <div class="py-2">
+
+                  <h3 class="card-header px-5 mb-2">
+                    <a class="article-link text-left" target="_blank" href="{{this.link}}">{{this.title}}</a>
+                  </h3>
+                  {{#if this.image}}
+                  <img src="{{this.image}}" class="mt-2">
+                  {{/if}}
+
+                  {{#if this.summary}}
+                  <img src="{{this.summary}}" class="mt-2">
+
+                  {{/if}} <h6><em>{{this.source}}</em></h6>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-1"></div>
+          </div>
         </div>
-        <a href="/" class="btn btn-success mt-3" role="button" aria-pressed="true">Take Me Home for Articles</a>
+
+
+        {{/each}}
+
+        {{#unless saved}}
+        <div class="card text-center">
+          <div class="card-body">
+            <h3 class="text-info">There are no saved articles</h3>
+            <h4 class="text-info"> Pick one of the sources above above and select the <button><i
+                  class="far fa-save text-success"></i></button> icon </h4>
+          </div>
+          {{/unless}}
+
+        </div>
       </div>
+
     </div>
   </div>
+  </div>
+
 </section>
