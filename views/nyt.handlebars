@@ -18,15 +18,16 @@
               <div class="btn-group-vertical text-center ">
 
                 {{#if note}}
-                <a class="btn mt btn-warning text-white addNote" note-id={{this._id}} isNote={{this.isNote}}><i
+                <a class="btn mt btn-warning text-white      addNote" note-id={{this._id}} isNote={{this.isNote}}><i
                     class="far fa-sticky-note fa-2x"></i></a>
                 {{else}}
                 <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}}
-                  isNote={{this.isNote}}><i class="far fa-sticky-note fa-2x"></i></a>
+                  isNote={{this.isNote}}><i class="far       fa-sticky-note fa-2x"></i></a>
                 {{/if}}
 
                 {{#if isSaved}}
-                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i class="far fa-save fa-2x"></i></a>
+                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
+                    class="far fa-save fa-2x"></i></a>
                 {{else}}
                 <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
                   save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
@@ -45,7 +46,7 @@
                     <a class="article-link text-left" target="_blank" href="{{this.link}}">{{this.title}}</a>
                   </h3>
 
-                  <img class="article-image" src="{{this.image}}" class="mt-2">
+                  <img class="article-image" src="{{this.image}}">
 
                   {{#unless this.summary}}
                   <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
@@ -53,11 +54,16 @@
                   {{/unless}}
 
                   <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
-
+                  {{#if note}}<h6 class="card-header mt-5 mx-5"> <strong>Note: </strong> <em>
+                      {{this.note}}</em></h6>{{/if}}
                 </div>
               </div>
             </div>
-            <div class="col-1"></div>
+            <div class="col-1">
+              {{#if note}}
+              <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
+                  View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
+            </div>
           </div>
         </div>
 

@@ -1,8 +1,9 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
-// * not sure what this does but found it online
 
+
+// * Show commands and testing
 mongoose.set('debug', true);
 
 
@@ -16,8 +17,6 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(express.static("public"));
-
-
 
 // Handlebars
 app.engine(
@@ -34,7 +33,8 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/" + collection
 
 // @ Connect to the Mongo DB
 mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 mongoose.Promise = Promise;
@@ -48,10 +48,11 @@ db.once("open", function () {
   console.log("Mongoose connection to the " + collection + " collection successful.");
 });
 
-
 // ! Routes
 require("./routes/apiRoutes")(app);
+require("./routes/scrapeRoutes")(app);
 require("./routes/htmlRoutes")(app);
+
 
 // Render 404 page for any unmatched routes
 app.get("*", function (req, res) {
