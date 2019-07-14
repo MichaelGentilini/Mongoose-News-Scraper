@@ -2,10 +2,8 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 
-
-// * Show commands and testing
-mongoose.set('debug', true);
-
+// * Use for Testing
+// mongoose.set('debug', true);
 
 var app = express();
 
