@@ -1,25 +1,32 @@
 <section>
-  <div class="container">
+  <div class="container text-center">
+    <a href="/onion/scrape" role="button" id="scrapeOnion" class="my-2 px-5 btn btn-light text-success">Get Onion
+      News</a>
+  </div>
+  <div class="card my-2 text-center bg-dark ">
+    <div class="container foxResults">
 
-    <div class="card bg-warning p-4  mt-5">
-      <div class="container onionResults">
-
+      <div class="card-body mt-2 mb-5">
         <img class="card-img-top pb-3" src="/img/onion-header.jpg" alt="Card image cap">
 
-        <div class="card mb-2 text-center">
-          <a href="/onion/scrape" role="button" id="scrapeOnion" class="btn text-warning">Scrape The
-            Onion</a>
-        </div>
+        {{#unless articles}}
+        <div class="card text-center">
+          <div class="card-body">
+            <h4>👀 Looks like we don't have any articles. 👀</h4>
+            <h5> 👆 Click "Get Onion News" 👆 </h5>
+          </div>
+          {{/unless}}
 
-        {{#each articles}}
-        <div class="card border-warning my-3 px-5 py-2">
+          {{#each articles}}
 
-          <div class="row">
-            <div class="col-12 col-md-1">
-              <div class="btn-group-vertical text-center ">
+          <div class="mt-3">
+            <div class="row">
+
+              <div class="col-12 col-md-1 text-center mb-1">
+
                 {{#if note}}
-                <a class="btn btn-warning text-white addNote" note-id={{this._id}} isNote=true><i
-                    class="far fa-sticky-note fa-2x"></i></a>
+                <a class="btn mt btn-warning text-white addNote" note-id={{this._id}} thisNote-id={{this.note}}
+                  isNote=true><i class="far fa-sticky-note fa-2x"></i></a>
                 {{else}}
                 <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}} isNote=false><i
                     class="far fa-sticky-note fa-2x"></i></a>
@@ -34,34 +41,39 @@
                 {{/if}}
                 <a class="btn btn-outline-danger text-danger deleteArticle" delete-id={{this._id}}><i
                     class="fas fa-trash fa-2x"></i></a>
-
               </div>
-            </div>
 
+              <div class="col">
+                <div class="card" data-_id={{this._id}}>
+                  <div>
 
-            <div class="col">
-              <div class="card" data-_id={{this._id}}>
-                <div>
+                    <h4 class="card-header text-white mt-2 px-5 mb-2">
+                      <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
+                    </h4>
 
-                  <h3 class="card-header px-5 mb-2">
-                    <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
-                  </h3>
+                    <img class="article-image card-img-top" src="{{this.image}}" alt="Card image cap">
+                    <p><strong>Source:</strong> <em>{{this.source}}</em></p>
+
+                    {{#unless this.summary}}
+                    <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
+                      <em>{{this.source}}</em></h6>
+                    {{/unless}}
+
+                    <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
+
+                  </div>
+                  {{#if note}}
+                  <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
+                      View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
                 </div>
-                {{#if note}}
-                <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
-                    View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
+              </div>
+
+              <div class="col-12 col-md-1">
+
               </div>
             </div>
-            <div class="col-12 col-md-1">
-
-            </div>
+            {{/each}}
           </div>
         </div>
-
-        {{/each}}
-
-
       </div>
-    </div>
-  </div>
 </section>

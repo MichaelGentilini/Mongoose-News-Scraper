@@ -1,87 +1,78 @@
-<body>
+<section>
 
-  <section>
+  <div class="container">
+    <div class="card my-5 text-center bg-dark ">
+      <div class="container allResults">
 
-    <div class="container">
+        <div class="card-body border-white">
+          <img class="card-img-top pb-3" src="/img/news.jpg" alt="Card image cap">
 
-      <div class="container mt-5">
-        <div class="card my-5 text-center bg-dark ">
+          {{#unless articles}}
+          <div class="card text-center">
+            <div class="card-body">
+              <h4>👀 Looks like we don't have any articles. 👀</h4>
+              <h5> 👆 Pick one of the sources above 👆 </h5>
+            </div>
+            {{/unless}}
 
-          <div class="card-body border-white">
-            <img class="card-img-top pb-3" src="/img/news.jpg" alt="Card image cap">
+            {{#each articles}}
 
-            {{#unless articles}}
-            <div class="card text-center">
-              <div class="card-body">
-                <h4>👀 Looks like we don't have any articles. 👀</h4>
-                <h5> 👆 Pick your source above 👆 </h5>
-              </div>
-              {{/unless}}
+            <div class="mt-3">
+              <div class="row">
 
-              {{#each articles}}
+                <div class="col-12 col-md-1 text-center">
 
-              <div class="mt-3">
-                <div class="row ">
+                  {{#if note}}
+                  <a class="btn mt btn-warning text-white addNote" note-id={{this._id}} thisNote-id={{this.note}}
+                    isNote=true><i class="far fa-sticky-note fa-2x"></i></a>
+                  {{else}}
+                  <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}} isNote=false><i
+                      class="far fa-sticky-note fa-2x"></i></a>
+                  {{/if}}
 
-                  <div class="col-12 col-md-1">
-                    <div class="btn-group-vertical text-center ">
+                  {{#if isSaved}}
+                  <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
+                      class="far fa-save fa-2x"></i></a>
+                  {{else}}
+                  <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
+                    save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
+                  {{/if}}
+                  <a class="btn btn-outline-danger text-danger deleteArticle" delete-id={{this._id}}><i
+                      class="fas fa-trash fa-2x"></i></a>
+                </div>
 
-                      {{#if note}}
-                      <a class="btn mt btn-warning text-white addNote" note-id={{this._id}} thisNote-id={{this.note}}
-                        isNote=true><i class="far fa-sticky-note fa-2x"></i></a>
-                      {{else}}
-                      <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}} isNote=false><i
-                          class="far fa-sticky-note fa-2x"></i></a>
-                      {{/if}}
+                <div class="col">
+                  <div class="card" data-_id={{this._id}}>
+                    <div>
 
-                      {{#if isSaved}}
-                      <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
-                          class="far fa-save fa-2x"></i></a>
-                      {{else}}
-                      <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
-                        save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
-                      {{/if}}
-                      <a class="btn btn-outline-danger text-danger deleteArticle" delete-id={{this._id}}><i
-                          class="fas fa-trash fa-2x"></i></a>
+                      <h4 class="card-header text-white mt-2 px-5 mb-2">
+                        <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
+                      </h4>
+
+                      <img class="article-image card-img-top" src="{{this.image}}" alt="Card image cap">
+                      <p><strong>Source:</strong> <em>{{this.source}}</em></p>
+
+                      {{#unless this.summary}}
+                      <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
+                        <em>{{this.source}}</em></h6>
+                      {{/unless}}
+
+                      <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
 
                     </div>
-                  </div>
-
-                  <div class="col">
-                    <div class="card" data-_id={{this._id}}>
-                      <div>
-
-                        <h4 class="card-header text-white mt-2 px-5 mb-2">
-                          <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
-                        </h4>
-
-                        <img class="article-image card-img-top" src="{{this.image}}" alt="Card image cap">
-                        <p><strong>Source:</strong> <em>{{this.source}}</em></p>
-
-                        {{#unless this.summary}}
-                        <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
-                          <em>{{this.source}}</em></h6>
-                        {{/unless}}
-
-                        <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
-
-
-                      </div>
-                      {{#if note}}
-                      <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
-                          View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i
-                          class="far fa-sticky-note fa-2x"></i></a>{{/if}}
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-1">
-
+                    {{#if note}}
+                    <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
+                        View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
                   </div>
                 </div>
-                {{/each}}
 
+                <div class="col-12 col-md-1">
+
+                </div>
               </div>
+              {{/each}}
             </div>
           </div>
+        </div>
 
-  </section>
-</body>
+</section>

@@ -22,16 +22,9 @@ module.exports = function (app) {
         date: -1
       }
     }, function (err, data) {
-      if (data.length === 0) {
-        res.render("index", {
-          message: "There's nothing scraped yet."
-        });
-
-      } else {
-        res.render("all", {
-          articles: data
-        });
-      }
+      res.render("all", {
+        articles: data
+      });
     });
   });
 

@@ -26,11 +26,11 @@ module.exports = function (app) {
         result.source = "New York Times";
 
         db.Article.create(result)
-          .then(function (nytArticle) {
-            // console.log(nytArticle);
+          .then(function () {
+            console.log(result)
           })
           .catch(function (err) {
-            console.log(err);
+            console.log("This article already exists")
           });
       });
 
@@ -50,15 +50,9 @@ module.exports = function (app) {
         created: -1
       }
     }, function (err, data) {
-      if (data.length === 0) {
-        res.render("nyt", {
-          // message: "There's nothing scraped yet."
-        });
-      } else {
-        res.render("nyt", {
-          articles: data
-        });
-      }
+      res.render("nyt", {
+        articles: data
+      });
     });
   });
 
@@ -83,10 +77,10 @@ module.exports = function (app) {
 
         db.Article.create(result)
           .then(function () {
-            // console.log(foxArticle);
+            console.log(result)
           })
           .catch(function (err) {
-            console.log(err);
+            console.log("This article already exists")
           });
       });
       res.redirect('/fox');
@@ -137,29 +131,19 @@ module.exports = function (app) {
         result.source = "The Onion";
         result.image = "img/onion-logo.jpg"
 
-        //?? working on this for a random generated text
-        //  result.summary = randomText;
         db.Article.create(result)
-          .then(function (onionArticle) {
-            // console.log(onionArticle);
+          .then(function () {
+            console.log(result)
           })
-
           .catch(function (err) {
-            console.log(err);
+            console.log("This article already exists")
           });
+
       });
 
       res.redirect('/onion');
       console.log("############## Scrape Complete ##############");
     });
-
-    function getRandomText() {
-      axios.get("http://www.randomtext.me/api/gibberish/p-1-2/12-25")
-        .then(function (response) {
-          var randomText = response.data["text_out"].replace(/<\/?[^>]+(>|$)/g, "");
-          return randomText
-        });
-    }
   });
 
   // @ Get onion results on onion page
@@ -172,9 +156,7 @@ module.exports = function (app) {
       }
     }, function (err, data) {
       if (data.length === 0) {
-        res.render("onion", {
-          // message: "There's nothing scraped yet."
-        });
+        res.render("onion", {});
       } else {
         res.render("onion", {
           articles: data
@@ -182,12 +164,5 @@ module.exports = function (app) {
       }
     });
   });
-
-
-
-
-
-
-
 
 }; // * module exports
