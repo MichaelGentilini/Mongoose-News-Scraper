@@ -15,7 +15,7 @@
         <div class="card border-warning my-3 px-5 py-2">
 
           <div class="row">
-            <div class="col-1 pt-2 pr-5">
+            <div class="col-12 col-md-1">
               <div class="btn-group-vertical text-center ">
                 {{#if note}}
                 <a class="btn btn-warning text-white addNote" note-id={{this._id}} isNote=true><i
@@ -47,12 +47,13 @@
                     <a class="article-link" target="_blank" href="{{this.link}}">{{this.title}}</a>
                   </h3>
                 </div>
+                {{#if note}}
+                <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
+                    View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
               </div>
             </div>
-            <div class="col-1">
-              {{#if note}}
-              <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
-                  View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
+            <div class="col-12 col-md-1">
+
             </div>
           </div>
         </div>

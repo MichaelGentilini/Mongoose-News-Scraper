@@ -14,40 +14,38 @@
         <div class="card border-primary my-3 px-5 py-2">
 
           <div class="row">
-            <div class="col-1 pt-2 pr-5">
+            <div class="col-12 col-md-1">
               <div class="btn-group-vertical text-center ">
 
                 {{#if note}}
-                <a class="btn mt btn-warning text-white      addNote" note-id={{this._id}} isNote={{this.isNote}}><i
+                <a class="btn mt btn-warning text-white   mt-1   addNote" note-id={{this._id}} isNote={{this.isNote}}><i
                     class="far fa-sticky-note fa-2x"></i></a>
                 {{else}}
-                <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}}
+                <a class="btn mt btn-outline-warning text-warning addNote mt-1" note-id={{this._id}}
                   isNote={{this.isNote}}><i class="far       fa-sticky-note fa-2x"></i></a>
                 {{/if}}
 
-                {{#if isSaved}}
-                <a class="btn btn-success text-white saveArticle" save-id={{this._id}} isSaved={{this.isSaved}}><i
-                    class="far fa-save fa-2x"></i></a>
-                {{else}}
-                <a class="btn btn-outline-success text-success saveArticle" isSaved={{this.isSaved}}
-                  save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
-                {{/if}}
-                <a class="btn btn-outline-danger text-danger deleteArticle" delete-id={{this._id}}><i
-                    class="fas fa-trash fa-2x"></i></a>
-
               </div>
+
+              {{#if isSaved}}
+              <a class="btn btn-success text-white saveArticle mt-1" save-id={{this._id}} isSaved={{this.isSaved}}><i
+                  class="far fa-save fa-2x"></i></a>
+              {{else}}
+              <a class="btn btn-outline-success text-success saveArticle mt-1" isSaved={{this.isSaved}}
+                save-id={{this._id}}><i class="far fa-save fa-2x"></i></a>
+              {{/if}}
+              <a class="btn btn-outline-danger text-danger deleteArticle mt-1" delete-id={{this._id}}><i
+                  class="fas fa-trash fa-2x"></i></a>
+
             </div>
 
             <div class="col">
               <div class="card text-center" data-_id={{this._id}}>
                 <div class="py-2">
-
                   <h3 class="card-header px-5 mb-2">
                     <a class="article-link text-left" target="_blank" href="{{this.link}}">{{this.title}}</a>
                   </h3>
-
                   <img class="article-image" src="{{this.image}}">
-
                   {{#unless this.summary}}
                   <h6 class="mt-2 text-center pl-5 text-left">Summary: Not available from
                     <em>{{this.source}}</em></h6>
@@ -55,12 +53,12 @@
 
                   <h6 class="mt-2 pl-5 text-left">{{this.summary}}</h6>
                 </div>
+                {{#if note}}
+                <a class="btn btn-outline-info text-info viewNote mt-1" Note-id={{this.note}}> <strong>
+                    See Note</strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
               </div>
             </div>
-            <div class="col-1">
-              {{#if note}}
-              <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
-                  View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
+            <div class="col-12 col-md-1">
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@
         <div class="card border-danger my-3 px-5 py-2">
 
           <div class="row">
-            <div class="col-1 pt-2 pr-5">
+            <div class=" col-12 col-md-1 ">
               <div class="btn-group-vertical text-center ">
 
                 {{#if note}}
@@ -22,7 +22,7 @@
                     class="far fa-sticky-note fa-2x"></i></a>
                 {{else}}
                 <a class="btn mt btn-outline-warning text-warning addNote" note-id={{this._id}}
-                  isNote={{this.isNote}}><i class="far       fa-sticky-note fa-2x"></i></a>
+                  isNote={{this.isNote}}><i class="far fa-sticky-note fa-2x"></i></a>
                 {{/if}}
 
                 {{#if isSaved}}
@@ -47,15 +47,15 @@
                   </h3>
 
                   <img class="article-image" src="{{this.image}}" class="mt-2">
-                  {{#if note}}<h6 class="card-header mt-5 mx-5"> <strong>Note: </strong> <em>
-                      {{this.note}}</em></h6>{{/if}}
+
                 </div>
+                {{#if note}}
+                <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
+                    View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
               </div>
             </div>
-            <div class="col-1">
-              {{#if note}}
-              <a class="btn btn-outline-info text-info viewNote" Note-id={{this.note}}> <strong>
-                  View Note </strong> &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-sticky-note fa-2x"></i></a>{{/if}}
+            <div class="col-12 col-md-1">
+
             </div>
           </div>
         </div>

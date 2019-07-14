@@ -1,60 +1,32 @@
 # Mongoose-News-Scraper
-news scraper using mongoose and cheerio
 
-A web app that lets users view and leave comments on the latest news.
-4. In order to deploy your project to Heroku, you must set up an mLab provision. mLab is remote MongoDB database that Heroku supports natively. Follow these steps to get it running:
+The Hot News Reader is a web app that lets users view, save, and leave comments on recent news articles.
 
-5. Create a Heroku app in your project directory.
+See it live: [https://my-mongoose-news-scraper.herokuapp.com/nyt](https://my-mongoose-news-scraper.herokuapp.com/nyt)
 
-6. Run this command in your Terminal/Bash window:
+Find the source code: [GitHub](https://github.com/dallasappraiser/Mongoose-News-Scraper)
 
-* `heroku addons:create mongolab`
+<code>npm start
 
-* This command will add the free mLab provision to your project.
+- The user has can choose The New York Times, Fox News, or The Onion as their news source
+- If articles are available, the user can also choose to view all articles
+- Once the news source is selected, if there are no articles the user can select scrape in order to grab the 10 most recent articles
+- once the articles load, the user has the option to add a note, save it, or delete it.
+- on the top the user can delete all articles that are not saved or view all of their saved articles.
 
-7. When you go to connect your mongo database to mongoose, do so the following way:
+This is a full stack application which uses:
 
-```js
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+**(back end)**
 
+- Express
+- Handlebars
+- MongoDB (no sql database)
+- cheerio (web scraping)
+- deployed on Heroku with mLab
+- nodemon to make reloading faster
 
-mongoose.connect(MONGODB_URI);
-```
+ **(front end)**
 
-* This code should connect mongoose to your remote mongolab database if deployed, but otherwise will connect to the local mongoHeadlines database on your computer.
-
-8. [Watch this demo of a possible submission](https://youtu.be/4ltZr3VPmno). See the deployed demo application [here](http://nyt-mongo-scraper.herokuapp.com/).
-
-## Instructions
-
-* Create an app that accomplishes the following:
-
-  1. Whenever a user visits your site, the app should scrape stories from a news outlet of your choice and display them for the user. Each scraped article should be saved to your application database. At a minimum, the app should scrape and display the following information for each article:
-
-     * Headline - the title of the article
-
-     * Summary - a short summary of the article
-
-     * URL - the url to the original article
-
-     * Feel free to add more content to your database (photos, bylines, and so on).
-
-  2. Users should also be able to leave comments on the articles displayed and revisit them later. The comments should be saved to the database as well and associated with their articles. Users should also be able to delete comments left on articles. All stored comments should be visible to every user.
-
-* Beyond these requirements, be creative and have fun with this!
-
-### Tips
-
-* Go back to Saturday's activities if you need a refresher on how to partner one model with another.
-
-* Whenever you scrape a site for stories, make sure an article isn't already represented in your database before saving it; Do not save any duplicate entries.
-
-* Don't just clear out your database and populate it with scraped articles whenever a user accesses your site.
-
-  * If your app deletes stories every time someone visits, your users won't be able to see any comments except the ones that they post.
-
-### Helpful Links
-
-* [MongoDB Documentation](https://docs.mongodb.com/manual/)
-* [Mongoose Documentation](http://mongoosejs.com/docs/api.html)
-* [Cheerio Documentation](https://github.com/cheeriojs/cheerio)
+- Bootstrap
+- JQuery
+- Sweet Alert2 - *love the modals!*
