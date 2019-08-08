@@ -1,6 +1,6 @@
 # Mongoose-News-Scraper
 
-The Hot News Reader is a web app that lets users view, save, and leave comments on recent news articles.
+Mongoose News Scraper is a web app that lets users view, save, and leave comments on recent news articles.
 
 See it live: [https://my-mongoose-news-scraper.herokuapp.com/nyt](https://my-mongoose-news-scraper.herokuapp.com/nyt)
 
@@ -8,7 +8,7 @@ Find the source code: [GitHub](https://github.com/dallasappraiser/Mongoose-News-
 
 <code>npm start
 
-- The user has can choose The New York Times, Fox News, or The Onion as their news source
+- The user can choose The New York Times, Fox News, or The Onion as their news source
 - If articles are available, the user can also choose to view all articles
 - Once the news source is selected, if there are no articles the user can select scrape in order to grab the 10 most recent articles
 - once the articles load, the user has the option to add a note, save it, or delete it.
