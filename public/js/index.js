@@ -95,7 +95,7 @@ $(document).ready(function () {
     var $deleteId = $(this).attr("delete-id");
 
     Swal.fire({
-      title: 'Are you sure you want to save this?',
+      title: 'Are you sure you want to delete this article?',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
