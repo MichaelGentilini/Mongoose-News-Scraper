@@ -2,7 +2,7 @@
 
 Mongoose News Scraper is a web app that lets users view, save, and leave comments on recent news articles.
 
-See it live: [https://my-mongoose-news-scraper.herokuapp.com/nyt](https://my-mongoose-news-scraper.herokuapp.com/nyt)
+See it live: [https://my-mongoose-news-scraper.herokuapp.com/](https://my-mongoose-news-scraper.herokuapp.com/)
 
 Find the source code: [GitHub](https://github.com/dallasappraiser/Mongoose-News-Scraper)
 
